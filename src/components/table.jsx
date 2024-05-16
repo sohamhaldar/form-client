@@ -1,7 +1,7 @@
 import NoEntry from "./noentry";
 import { useState,useEffect } from "react";
 
-const TableComponent = ({ data, onUpdate, onDelete,setRows }) => {
+const TableComponent = ({ data, onUpdate, onDelete,setRows,updateData }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [checkedRows, setCheckedRows] = useState({});
 
@@ -99,7 +99,7 @@ const TableComponent = ({ data, onUpdate, onDelete,setRows }) => {
           </tbody>
         </table>
       ) : (
-        <NoEntry />
+        <NoEntry updateData={updateData}/>
       )}
     </div>
   );

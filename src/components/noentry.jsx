@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Modal from './modal';
 import Form from './form';
 
-const NoEntry = () => {
+const NoEntry = ({updateData}) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleAddEntryClick = () => {
@@ -26,7 +26,7 @@ const NoEntry = () => {
 
       {showModal && (
         <Modal onClose={handleCloseModal} className=''>
-          <Form onClose={handleCloseModal}/>
+          <Form onClose={handleCloseModal} updateData={updateData}/>
         </Modal>
       )}
     </div>
