@@ -13,6 +13,20 @@ const Page=()=>{
     const [showModal, setShowModal] = useState(false);
     const [isUpdate,setUpdate]=useState(false);
     const [prevData,setPrevData]=useState({});
+    
+  const handleSendMail = () => {
+    const checkedData = Object.keys(checkedRows).filter(item => checkedRows[item]);
+    const filteredList = data.filter(item => checkedData.includes(item._id));
+    const mailBody = `
+                Serial Number Name Phone Email Hobbies
+              ${filteredList.map((item, index) => `
+                  ${index + 1} ${item.name} ${item.phone} ${item.email} ${item.hobbies}
+              `).join('')}      
+    `;
+    const body = encodeURIComponent(mailBody);
+    console.log(body);
+    window.location.href = `mailto:info@redpositive.in?subject=Selected Rows Data&body=${body}`;
+  };
 
     const handleAddEntryClick = () => {
       setShowModal(true);
@@ -59,8 +73,8 @@ const Page=()=>{
     return(
       <div class="bg-cover w-screen h-screen flex flex-col justify-center items-center relative " style={{ backgroundImage: 'url(/cool-background.png)' }}>
         <div className="h-[20%] w-full flex ">
-            <div className="w-[60%] h-full"></div>
-            <div className="w-[40%] h-full flex justify-center items-center">
+            <div className="w-[50%] h-full"></div>
+            <div className="w-[50%] h-full flex justify-center items-center">
               <div className="h-[80%] w-[80%] bg-slate-50 rounded-lg flex justify-around items-center">
                 <button onClick={handleAddEntryClick} className="h-[50%] flex justify-normal items-center rounded-md text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-3 py-2.5 ">
                       <img src="/add-circle.svg" className="h-[90%] m-1" />
@@ -79,6 +93,14 @@ const Page=()=>{
                   <img src="/update.svg" className="h-[90%] m-1" />
 
                   Update
+                </button>
+                <button
+                  onClick={handleSendMail}
+                  className={`h-[50%] flex justify-end items-center rounded-md text-white ${Object.keys(checkedRows).filter(item => checkedRows[item]).length === 0? 'bg-gray-500 hover:bg-gray-500' : 'bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br'} focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium text-sm px-3 py-2.5`}
+                  disabled={Object.keys(checkedRows).filter(item => checkedRows[item]).length === 0}
+                >
+                  <img src="/delete.svg" className="h-[80%] m-1" />
+                  Mail
                 </button>
               </div>
             </div>
